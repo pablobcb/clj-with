@@ -16,15 +16,17 @@
 
             ~clause* ~then
 
-            ~'else ~'else
+            ~'else (match ~'else
+                          ~@else-bindings))))
 
-            )))
 
 #_(macroexpand-1 '(with [[n 1] [1 1]]
                         (+ n 1)
   
                         :else
-                        [:error data] :ok))
+                        [:error data] :ok)
+                         
+                        wildcard :wildcard)
 
 
 
