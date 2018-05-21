@@ -4,20 +4,26 @@
   (:require [clojure.core.match :refer [match]]))
 
 
+(defn ^:private match* [body bindings else-bindings]
+  (if (empty? bindings)
+    (do ~@body)
+    (let [[clause expr] (first bindings)
+          value (eval expr)]
+      `(match '~value
+         ~clause
+          ~'body
+         ;(match* ~body ~(next bindings) ~else-bindings)
+
+         ~'else
+         (match ~'else
+           ~@else-bindings)
+         ))))
+
 (defmacro with [bindings & rest]
   (assert vector? bindings)
   (let [[body else-bindings] (split-with #(not (keyword? %)) rest)
-        else-bindings (next else-bindings)
-        [clause expr] (first (partition 2 bindings))
-        value (eval expr)
-        [clause* then] (first (partition 2 else-bindings))]
-    `(match '~value
-            ~clause (do ~@body)
-
-            ~clause* ~then
-
-            ~'else (match ~'else
-                          ~@else-bindings))))
+        else-bindings (next else-bindings)]
+    (match* (first body) (partition 2 bindings) else-bindings)))
 
 
 #_(macroexpand-1 '(with [[n 1] [1 1]]
