@@ -1,4 +1,4 @@
-(ns slip-api.with
+(ns clj-with.core
   (:require
     [clojure.walk :refer :all]
     [clojure.core.match :refer [match]]))
