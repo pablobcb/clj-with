@@ -8,7 +8,6 @@
       `(match (let [val# (eval ~expr)]
                 (if (vector? val#) val# [val#]))
               ~clause
-              ;; if to evaluate body goes here
               ~(match* body (next bindings) else-bindings)
 
               ~'else

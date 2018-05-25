@@ -19,7 +19,8 @@ Macro
 
 (with [[:ok x y] (f1)
        [:ok z] (f2 (+ x y))]
-  (* z 2)
+  (do (println "all clauses have matched :)")
+      (* z 2))
   :else
   [:error err] err)
 ;=> 62
@@ -31,3 +32,4 @@ Macro
   [:error err] err)
 ;=> :match-error
 ```
+For more use cases peek at the `test` folder
