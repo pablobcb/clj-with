@@ -13,7 +13,7 @@
                (do :nothing
                    (* z 2))
 
-               :else
+               :otherwise
                [:error err] err))))
 
 (deftest pattern-match-wild-card
@@ -24,13 +24,13 @@
                (do :nothing
                    wildcard)
 
-               :else
+               :otherwise
                [:error err] err))))
 
 (deftest ignored-vars
   (is (= 10
          (with [[:ok x _] (f1)] x
-               :else [:error err] err))))
+               :otherwise [:error err] err))))
 
 (deftest no-else-provided
   (is (= 10 (with [[:ok x _] (f1)] x))))
@@ -40,7 +40,7 @@
      (with [[:ok x y] (f1)
             [:ok z] (produce-error)]
            (* z 2)
-           :else
+           :otherwise
            [:error err] err)))
 
 (deftest no-match
@@ -48,16 +48,16 @@
                (with [[:ok x y] (f1)
                       [:ok z] [:no-match :_ :-]]
                      (* z 2)
-                     :else
+                     :otherwise
                      [:error err] err))))
 
-(deftest double-else
+(deftest else-wild-card-nested-in-otherwise
   (is (= :ok
          (with [[:ok x y] (f1)
                 [:ok z] [:no-match :_ :-]]
                (* z 2)
 
-               :else
+               :otherwise
                [:error err] err
 
                :else :ok))))
@@ -68,4 +68,4 @@
                 [:ok z] [:else-wildcard]]
                (* z 2)
 
-               :else wildcard wildcard))))
+               :otherwise wildcard wildcard))))

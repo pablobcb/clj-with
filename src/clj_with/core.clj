@@ -15,13 +15,15 @@
                      ~@else-bindings)))))
 
 (defmacro with
-  "Chain pattern matching clauses, using 'clojure.core.match/match'. Take a vector of
-  bindings to match, a body, and optionally an `:else` keyword followed by list
-  of clauses to match in case of failure. Pattern matches each bind and if all
-  clauses match, the body is executed returning its result. Otherwise the chain
-  is aborted and the non-matched value is matched against the optional :else
-  clauses, if provided. Raises 'java.lang.IllegalArgumentException' if none
-  of the clauses match, just as 'clojure.core.match/match'.
+  "Chain pattern matching clauses, using 'clojure.core.match/match'. Take a
+  vector of bindings to match, a body, and optionally an `:otherwise` keyword
+  followed by a list of clauses to match in case of failure.
+  Pattern matches each bind and if all clauses match, the body is executed
+  returning its result. Otherwise the chain is aborted and the non-matched
+  value is matched against the optional :otherwise clauses, if provided.
+  Raises 'java.lang.IllegalArgumentException' if none of the clauses match,
+  just like 'clojure.core.match/match'.
+
   Example:
   (defn f1 [] [:ok 10 20])
   (defn f2 [k] [:ok (inc k)])
@@ -30,14 +32,14 @@
   (with [[:ok x y] (f1)
          [:ok z] (f2 (+ x y))]
     (* z 2)
-    :else
+    :otherwise
     [:error err] err)
   ;=> 62
 
   (with [[:ok x y] (f1)
          [:ok z] (produce-error)]
     (* z 2)
-    :else
+    :otherwise
     [:error err] err)
   ;=> :match-error"
   [bindings & rest]
@@ -46,4 +48,3 @@
   (let [[body else-bindings] (split-with #(not (keyword? %)) rest)
         else-bindings (next else-bindings)]
     (match* (first body) (partition 2 bindings) else-bindings)))
-
