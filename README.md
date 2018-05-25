@@ -5,7 +5,7 @@ Macro inspired by Elixir's `with` statement
 
 Macro
   Chain pattern matching clauses, using `clojure.core.match/match`.  Take a vector of
-  bindings to match, a body, and optionally an `:else` keyword followed by list
+  bindings to match, a body, and optionally an `:otherwise` keyword followed by list
   of clauses to match in case of failure. Pattern matches each bind and if all
   clauses match, the body is executed returning its result. Otherwise the chain
   is aborted and the non-matched value is matched against the optional :else
