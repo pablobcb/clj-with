@@ -23,14 +23,16 @@ Macro
        [:ok z] (f2 (+ x y))]
   (do (println "all clauses have matched :)")
       (* z 2))
-  :else
-  [:error err] err)
+      
+  :otherwise [:error err] err
+  
+  :else :no-match)
 ;=> 62
 
 (with [[:ok x y] (f1)
        [:ok z] (produce-error)]
   (* z 2)
-  :else
+  :otherwise
   [:error err] err)
 ;=> :match-error
 ```
