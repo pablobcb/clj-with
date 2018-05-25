@@ -13,21 +13,21 @@ Macro
   
   Example:
 ```clojure
-  (defn f1 [] [:ok 10 20])
-  (defn f2 [k] [:ok (inc k)])
-  (defn produce-error [] [:error :match-error])
+(defn f1 [] [:ok 10 20])
+(defn f2 [k] [:ok (inc k)])
+(defn produce-error [] [:error :match-error])
 
-  (with [[:ok x y] (f1)
-         [:ok z] (f2 (+ x y))]
-    (* z 2)
-    :else
-    [:error err] err)
-  ;=> 62
+(with [[:ok x y] (f1)
+       [:ok z] (f2 (+ x y))]
+  (* z 2)
+  :else
+  [:error err] err)
+;=> 62
 
-  (with [[:ok x y] (f1)
-         [:ok z] (produce-error)]
-    (* z 2)
-    :else
-    [:error err] err)
-  ;=> :match-error
+(with [[:ok x y] (f1)
+       [:ok z] (produce-error)]
+  (* z 2)
+  :else
+  [:error err] err)
+;=> :match-error
 ```
