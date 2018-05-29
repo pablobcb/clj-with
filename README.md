@@ -24,7 +24,8 @@ Macro
   (do (println "all clauses have matched :)")
       (* z 2))
       
-  :otherwise [:error err] err
+  :otherwise 
+  [:error err] err
   
   :else :no-match)
 ;=> 62
@@ -32,6 +33,7 @@ Macro
 (with [[:ok x y] (f1)
        [:ok z] (produce-error)]
   (* z 2)
+  
   :otherwise
   [:error err] err)
 ;=> :match-error
