@@ -4,6 +4,8 @@ Macro inspired by Elixir's `with` statement
 [![Clojars Project](https://img.shields.io/clojars/v/clj-with.svg)](https://clojars.org/clj-with)
 
 Macro
+
+
   Chain pattern matching clauses, using `clojure.core.match/match`.  Take a vector of
   bindings to match, a body, and optionally an `:otherwise` keyword followed by list
   of clauses to match in case of failure. Pattern matches each bind and if all
